@@ -1,53 +1,52 @@
-window.onload = function(){
-    const savedDays = JSON.parse(localStorage.getItem("days")) || [];
-    savedDays.forEach(day => renderCard(day));
+// Recuperar dados do LocalStorage ao carregar a página
+window.onload = function() {
+  const savedDays = JSON.parse(localStorage.getItem("days")) || [];
+  savedDays.forEach(day => renderCard(day));
 };
 
-document.getElementById("dayForm").addEventListener("submit",
-    function(e) {
-        e.preventDefault();
+document.getElementById("dayForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-        const date = document.getElementById("date").value ;
-        const hours = parseFloat(document.getElementById("hours").value);
-        const trips = parseInt(document.getElementById("trips").value);
-        const earnings = parseFloat(document.getElementById("earnings").value);
+  const date = document.getElementById("date").value;
+  const hours = parseFloat(document.getElementById("hours").value);
+  const trips = parseInt(document.getElementById("trips").value);
+  const earnings = parseFloat(document.getElementById("earnings").value);
 
-        //Cálculos
-        const earningsPerHour = earnings / hours;
-        const earningsPerTrip = earnings / trips;
-        const tripsPerHour = trips / hours;
+  // Cálculos
+  const earningsPerHour = earnings / hours;
+  const earningsPerTrip = earnings / trips;
+  const tripsPerHour = trips / hours;
 
-        //Fórmula de eficiência (escala 0 a 100)
-        let efficiency = ((earningsPerHour/50)*40) +
-        ((earningPerTrip/20)*30) + ((tripsPerHour/3)*30);
-        if (efficiency > 100) efficiency = 100; //Limite máximo
+  // Fórmula de eficiência (escala 0 a 100)
+  let efficiency = ((earningsPerHour/50)*40) + ((earningsPerTrip/20)*30) + ((tripsPerHour/3)*30);
+  if (efficiency > 100) efficiency = 100; // Limite máximo
 
-        //Funções auxiliares
-        function avaliarGanhosHora(valor) {
-            if (valor < 25) return {nivel: "Baixo", cor: "red"}:
-            if (valor < 40) return {nivel: "Médio", cor: "Yellow"}:
-            return {nivel: "alto", cor: "lime"};
-        }
+  // Funções auxiliares
+  function avaliarGanhosHora(valor) {
+    if (valor < 25) return {nivel: "Baixo", cor: "red"};
+    if (valor < 40) return {nivel: "Médio", cor: "yellow"};
+    return {nivel: "Alto", cor: "lime"};
+  }
 
-        function avaliarGanhosViagem(valor){
-            if (valor < 10) return {nivel: "Baixo", cor: "red"};
-            if (valor < 15) return {nivel: "Médio", cor: "yellow"};
-            return {nivel: "Alto", cor: "lime"};
-        }
+  function avaliarGanhosViagem(valor) {
+    if (valor < 10) return {nivel: "Baixo", cor: "red"};
+    if (valor < 15) return {nivel: "Médio", cor: "yellow"};
+    return {nivel: "Alto", cor: "lime"};
+  }
 
-        function avaliarViagesHora(valor){
-            if (valor < 1.5) return {nivel: "Baixo", cor: "red"};
-            if (valor < 2.5) return {nivel: "Médio", cor: "yellow"};
-            return {nivel: "Alto", cor: "lime"};
-        }
+  function avaliarViagensHora(valor) {
+    if (valor < 1.5) return {nivel: "Baixo", cor: "red"};
+    if (valor < 2.5) return {nivel: "Médio", cor: "yellow"};
+    return {nivel: "Alto", cor: "lime"};
+  }
 
-        function avaliarEficiência(valor){
-            if (valor < 50) return {nivel: "Baixa", cor: "red"};
-            if (valor < 75) return {nivel: "Boa", cor: "yellow"};
-            return {nivel: "Excelente", cor: "lime"};
-        }
+  function avaliarEficiência(valor) {
+    if (valor < 50) return {nivel: "Baixa", cor: "red"};
+    if (valor < 75) return {nivel: "Boa", cor: "yellow"};
+    return {nivel: "Excelente", cor: "lime"};
+  }
 
-        function ranking(valor) {
+  function ranking(valor) {
     if (valor < 50) return "🥉 Bronze";
     if (valor < 75) return "🥈 Prata";
     return "🥇 Ouro";
@@ -123,3 +122,4 @@ function removeFromStorage(date) {
   savedDays = savedDays.filter(d => d.date !== date);
   localStorage.setItem("days", JSON.stringify(savedDays));
 }
+

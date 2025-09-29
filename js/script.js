@@ -32,6 +32,22 @@ function ranking(valor) {
 }
 
 // ========================
+// Renderização do Histórico
+// ========================
+function renderEfficiencyHistory() {
+  const historyDiv = document.getElementById("efficiencyHistory");
+  historyDiv.innerHTML = ""; // limpa antes de renderizar
+
+  const efficiencies = JSON.parse(localStorage.getItem("efficiencies")) || [];
+
+  efficiencies.forEach(item => {
+    const p = document.createElement("p");
+    p.innerHTML = `<strong>${item.date}:</strong> ${item.efficiency.toFixed(2)} ⭐`;
+    historyDiv.appendChild(p);
+  });
+}
+
+// ========================
 // Função para criar cards
 // ========================
 function renderCard(day) {
@@ -71,18 +87,26 @@ function renderCard(day) {
   card.querySelector(".delete-btn").addEventListener("click", function () {
     card.remove();
     removeFromStorage(day.date);
+    removeFromEfficiency(day.date);
+    renderEfficiencyHistory();
   });
 
   resultsDiv.prepend(card);
 }
 
 // ========================
-// Função para remover do LocalStorage
+// Funções de LocalStorage
 // ========================
 function removeFromStorage(date) {
   let savedDays = JSON.parse(localStorage.getItem("days")) || [];
   savedDays = savedDays.filter(d => d.date !== date);
   localStorage.setItem("days", JSON.stringify(savedDays));
+}
+
+function removeFromEfficiency(date) {
+  let efficiencies = JSON.parse(localStorage.getItem("efficiencies")) || [];
+  efficiencies = efficiencies.filter(e => e.date !== date);
+  localStorage.setItem("efficiencies", JSON.stringify(efficiencies));
 }
 
 // ========================
@@ -91,6 +115,8 @@ function removeFromStorage(date) {
 window.onload = function () {
   const savedDays = JSON.parse(localStorage.getItem("days")) || [];
   savedDays.forEach(day => renderCard(day));
+
+  renderEfficiencyHistory();
 };
 
 // ========================
@@ -104,7 +130,6 @@ document.getElementById("dayForm").addEventListener("submit", function (e) {
   const trips = parseInt(document.getElementById("trips").value);
   const earnings = parseFloat(document.getElementById("earnings").value);
 
-  // Validação básica
   if (!date || hours <= 0 || trips <= 0 || earnings <= 0) {
     alert("Preencha todos os campos corretamente!");
     return;
@@ -118,7 +143,7 @@ document.getElementById("dayForm").addEventListener("submit", function (e) {
   let efficiency = ((earningsPerHour / 50) * 40) +
                    ((earningsPerTrip / 20) * 30) +
                    ((tripsPerHour / 3) * 30);
-  efficiency = Math.min(efficiency, 100); // limitar a 100
+  efficiency = Math.min(efficiency, 100);
 
   const dayData = {
     date,
@@ -136,11 +161,17 @@ document.getElementById("dayForm").addEventListener("submit", function (e) {
     medalha: ranking(efficiency)
   };
 
-  // Salvar e mostrar
+  // Salvar "days"
   const savedDays = JSON.parse(localStorage.getItem("days")) || [];
   savedDays.push(dayData);
   localStorage.setItem("days", JSON.stringify(savedDays));
 
+  // Salvar "efficiencies"
+  const efficiencies = JSON.parse(localStorage.getItem("efficiencies")) || [];
+  efficiencies.push({ date, efficiency });
+  localStorage.setItem("efficiencies", JSON.stringify(efficiencies));
+
   renderCard(dayData);
+  renderEfficiencyHistory();
   document.getElementById("dayForm").reset();
 });

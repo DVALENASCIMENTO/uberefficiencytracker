@@ -11,9 +11,6 @@ document.getElementById("dayForm").addEventListener("submit", function(e) {
   const hours = parseFloat(document.getElementById("hours").value);
   const trips = parseInt(document.getElementById("trips").value);
   const earnings = parseFloat(document.getElementById("earnings").value);
-  const fuelValue = parseFloat(document.getElementById("fuel").value); // valor abastecido
-  const kmInicial = parseFloat(document.getElementById("kmInicial").value); // km inicial
-  const kmFinal = parseFloat(document.getElementById("kmFinal").value); // km final
 
   // Cálculos básicos
   const earningsPerHour = earnings / hours;
@@ -24,20 +21,6 @@ document.getElementById("dayForm").addEventListener("submit", function(e) {
   let efficiency = ((earningsPerHour/50)*40) + ((earningsPerTrip/20)*30) + ((tripsPerHour/3)*30);
   if (efficiency > 100) efficiency = 100; // Limite máximo
 
-  // Constantes de combustível
-  const fuelPrice = 6.99; // preço do litro
-  const consumoMedio = 10.5; // km/L do Uno Attractive 1.0 2015
-
-  // Quilometragem
-  const distancia = kmFinal - kmInicial;
-
-  // Consumo teórico e real
-  const litrosAbastecidos = fuelValue / fuelPrice;
-  const litrosNecessarios = distancia / consumoMedio;
-
-  // Economia proporcional à eficiência
-  const litrosEconomizados = litrosNecessarios * (efficiency / 100);
-  const valorEconomizado = litrosEconomizados * fuelPrice;
 
   // Funções auxiliares
   function avaliarGanhosHora(valor) {
@@ -79,13 +62,6 @@ document.getElementById("dayForm").addEventListener("submit", function(e) {
     earningsPerTrip,
     tripsPerHour,
     efficiency,
-    kmInicial,
-    kmFinal,
-    distancia,
-    litrosAbastecidos,
-    litrosNecessarios,
-    litrosEconomizados,
-    valorEconomizado,
     nivelHora: avaliarGanhosHora(earningsPerHour),
     nivelViagem: avaliarGanhosViagem(earningsPerTrip),
     nivelVph: avaliarViagensHora(tripsPerHour),
@@ -117,13 +93,6 @@ function renderCard(day) {
     <p><strong>Horas Online:</strong> ${day.hours}h</p>
     <p><strong>Viagens:</strong> ${day.trips}</p>
     <p><strong>Ganhos:</strong> R$ ${day.earnings.toFixed(2)}</p>
-    <p><strong>KM Inicial:</strong> ${day.kmInicial} km</p>
-    <p><strong>KM Final:</strong> ${day.kmFinal} km</p>
-    <p><strong>Distância Percorrida:</strong> ${day.distancia.toFixed(1)} km</p>
-    <p><strong>Litros Abastecidos:</strong> ${day.litrosAbastecidos.toFixed(2)} L</p>
-    <p><strong>Litros Necessários (10,5 km/L):</strong> ${day.litrosNecessarios.toFixed(2)} L</p>
-    <p><strong>Gasolina Economizada (pela eficiência):</strong> ${day.litrosEconomizados.toFixed(2)} L</p>
-    <p><strong>Valor Economizado:</strong> R$ ${day.valorEconomizado.toFixed(2)}</p>
     <p><strong>Ganhos/Hora:</strong> R$ ${day.earningsPerHour.toFixed(2)} 
       <span style="color:${day.nivelHora.cor}">(${day.nivelHora.nivel})</span>
     </p>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uber Efficiency Tracker</title>
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/uber.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🚗 Uber Efficiency Tracker</h1>
+    <form id="dayForm">
+      <label>Data:
+        <input type="date" id="date" required>
+      </label>
+      <label>Tempo Online (horas):
+        <input type="number" id="hours" step="0.1" min="0" required>
+      </label>
+      <label>Número de Viagens:
+        <input type="number" id="trips" min="0" required>
+      </label>
+      <label>Ganho Total (R$):
+        <input type="number" id="earnings" step="0.01" min="0" required>
+      </label>
+      <button type="submit">Adicionar Dia</button>
+    </form>
+
+    <h2>📊 Resultados</h2>
+    <div id="results"></div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

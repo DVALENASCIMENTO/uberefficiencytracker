@@ -8,31 +8,62 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  
+<!-- POPUP DE ABERTURA (mantém onde estiver, antes do nav é OK) -->
+<div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura">
+  <div class="splash-content">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/uber.svg" alt="Logo Uber" class="splash-logo">
+    <h1>Uber Efficiency Tracker</h1>
+    <button id="startBtn" class="btn-primary">Iniciar</button>
+  </div>
+</div>
+
+
+  <!-- MENU FIXO -->
+  <nav class="top-menu">
+    <ul>
+      <li><a href="#inputs">➕ Adicionar Dia</a></li>
+      <li><a href="#results-section">📊 Resultados</a></li>
+      <li><a href="#efficiency-section">📅 Histórico</a></li>
+    </ul>
+  </nav>
+
   <div class="container">
     <h1>🚗 Uber Efficiency Tracker</h1>
-    <form id="dayForm">
-      <label>Data:
-        <input type="date" id="date" required>
-      </label>
-      <label>Tempo Online (horas):
-        <input type="number" id="hours" step="0.1" min="0" required>
-      </label>
-      <label>Número de Viagens:
-        <input type="number" id="trips" min="0" required>
-      </label>
-      <label>Ganho Total (R$):
-        <input type="number" id="earnings" step="0.01" min="0" required>
-      </label>
-      <button type="submit">Adicionar Dia</button>
-    </form>
 
-    <h2>📊 Resultados</h2>
-    <div id="results"></div>
+    <!-- Seção Inputs -->
+    <section id="inputs">
+      <form id="dayForm">
+        <label>Data:
+          <input type="date" id="date" required>
+        </label>
+        <label>Tempo Online (horas):
+          <input type="number" id="hours" step="0.1" min="0" required>
+        </label>
+        <label>Número de Viagens:
+          <input type="number" id="trips" min="0" required>
+        </label>
+        <label>Ganho Total (R$):
+          <input type="number" id="earnings" step="0.01" min="0" required>
+        </label>
+        <button type="submit">Adicionar Dia</button>
+      </form>
+    </section>
 
-    <h2>📅 Histórico de Eficiência</h2>
-    <div id="efficiencyHistory"></div>
+    <!-- Seção Resultados -->
+    <section id="results-section">
+      <h2>📊 Resultados</h2>
+      <div id="results"></div>
+    </section>
+
+    <!-- Seção Histórico -->
+    <section id="efficiency-section">
+      <h2>📅 Histórico de Eficiência</h2>
+      <div id="efficiencyHistory"></div>
+    </section>
   </div>
 
   <script src="js/script.js"></script>
+
 </body>
 </html>

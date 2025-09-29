@@ -136,3 +136,107 @@ button:hover {
     font-size: 14px;
   }
 }
+
+/* =====================
+   MENU FIXO
+===================== */
+.top-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-menu ul {
+  list-style: none;
+  display: flex;
+  justify-content: center; /* centraliza os botões */
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
+  gap: 15px; /* espaço entre os botões */
+}
+
+.top-menu li {
+  display: inline-block;
+}
+
+.top-menu li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  background: #1c1c1c;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.top-menu li a:hover {
+  background: #1db954;
+  color: #fff;
+}
+
+/* Popup */
+.splash-screen {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.95);
+  z-index: 9999; /* acima do menu fixo */
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.splash-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-content {
+  text-align: center;
+  color: #fff;
+  padding: 28px;
+  border-radius: 12px;
+  transform: translateY(0);
+  transition: transform 0.45s ease;
+  max-width: 360px;
+}
+
+.splash-screen.fade-out .splash-content {
+  transform: translateY(-8px);
+}
+
+.splash-logo {
+  width: 92px;
+  height: 92px;
+  margin-bottom: 18px;
+  filter: invert(100%); /* deixa branca se necessário */
+}
+
+/* botão principal */
+.btn-primary {
+  padding: 10px 18px;
+  background: #1db954;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.btn-primary:hover { background:#17a84b; }
+
+/* bloqueio de scroll enquanto splash visível */
+.no-scroll {
+  overflow: hidden !important;
+}
+

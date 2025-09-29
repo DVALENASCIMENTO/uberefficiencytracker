@@ -175,3 +175,55 @@ document.getElementById("dayForm").addEventListener("submit", function (e) {
   renderEfficiencyHistory();
   document.getElementById("dayForm").reset();
 });
+
+// --- CONTROLADOR DO SPLASH (colocar no topo do seu script.js ou em um arquivo importado) ---
+document.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('splashScreen');
+  const startBtn = document.getElementById('startBtn');
+
+  if (!splash || !startBtn) {
+    console.warn('Splash ou startBtn não encontrados no DOM.');
+    return;
+  }
+
+  // impede scroll/interaction no fundo enquanto o splash estiver visível
+  document.body.classList.add('no-scroll');
+
+  // Se quiser pular o splash em visitas futuras, pode usar localStorage
+  const skip = localStorage.getItem('skipSplash') === 'true';
+  if (skip) {
+    splash.style.display = 'none';
+    document.body.classList.remove('no-scroll');
+    return;
+  }
+
+  function hideSplash() {
+    // adiciona classe de fade; ao terminar a transição remove o elemento visualmente
+    splash.classList.add('fade-out');
+    splash.addEventListener('transitionend', () => {
+      // opcional: remover do DOM ou apenas esconder
+      splash.style.display = 'none';
+      document.body.classList.remove('no-scroll');
+    }, { once: true });
+  }
+
+  // clique no botão iniciar
+  startBtn.addEventListener('click', () => {
+    // opcional: memorizar para não mostrar da próxima vez
+    // localStorage.setItem('skipSplash', 'true');
+    hideSplash();
+  });
+
+  // permitir fechar com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideSplash();
+  });
+
+  // opcional: clicar fora do conteúdo fecha (overlay click)
+  splash.addEventListener('click', (e) => {
+    if (e.target === splash) hideSplash();
+  });
+
+  // opcional: fechar automaticamente após X segundos (descomente se quiser)
+  // setTimeout(hideSplash, 7000);
+});

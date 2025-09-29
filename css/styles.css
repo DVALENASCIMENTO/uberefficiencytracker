@@ -15,6 +15,7 @@ body {
 h1, h2 {
   text-align: center;
   color: #5CA9E6;
+  margin-top: 50px;
 }
 
 form {
@@ -216,10 +217,11 @@ button:hover {
 }
 
 .splash-logo {
-  width: 92px;
-  height: 92px;
-  margin-bottom: 18px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 24px auto; /* centraliza horizontalmente e ajusta espaçamento inferior */
   filter: invert(100%); /* deixa branca se necessário */
+  display: block;
 }
 
 /* botão principal */
